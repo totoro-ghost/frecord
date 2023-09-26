@@ -63,7 +63,7 @@ record_screen_mp4() {
     notify-send "Screenshot" "Recording saved to $VIDEO_DIR"
 }
 
-record_screen_mp4_audio_virtual() {
+record_region_mp4_audio_virtual() {
     notify-send "Screenshot" "Select a region to record"
     dt=$(date '+%d-%m-%Y %H:%M:%S')
 
@@ -76,7 +76,7 @@ record_screen_mp4_audio_virtual() {
     notify-send "Screenshot" "Recording saved to $VIDEO_DIR"
 }
 
-record_screen_mp4_audio_microphone() {
+record_region_mp4_audio_microphone() {
     notify-send "Screenshot" "Select a region to record"
     dt=$(date '+%d-%m-%Y %H:%M:%S')
 
@@ -207,7 +207,9 @@ main() {
         case "$AUDIO" in
         "virtual")
             case "$VFORMAT" in
-            "mp4") ;;
+            "mp4") 
+                record_region_mp4_audio_virtual
+            ;;
             *)
                 exit 1
                 ;;
@@ -215,7 +217,9 @@ main() {
             ;;
         "mic")
             case "$VFORMAT" in
-            "mp4") ;;
+            "mp4") 
+                record_region_mp4_audio_microphone
+                ;;
             *)
                 exit 1
                 ;;
@@ -241,7 +245,6 @@ main() {
         "virtual")
             case "$VFORMAT" in
             "mp4")
-                record_screen_mp4_audio_virtual
                 ;;
             *)
                 exit 1
@@ -251,7 +254,6 @@ main() {
         "mic")
             case "$VFORMAT" in
             "mp4")
-                record_screen_mp4_audio_microphone
                 ;;
             *)
                 exit 1
@@ -281,5 +283,5 @@ main() {
 
 # running the program
 set -e
-main "$1" &
+main "$@" &
 exit 0
